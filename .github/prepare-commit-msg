@@ -1,0 +1,36 @@
+#!/bin/bash
+
+case "$2,$3" in
+    ,|template,)
+        ORIG_MSG_FILE="$1"
+        PROJECT=`git config project.name`
+        GITUSER=`git config project.user`
+        [ -z "$PROJECT" ] && PROJECT=unknown
+        sed -i -- "s/%proj/$PROJECT/g" "$ORIG_MSG_FILE"
+        [ -z "$GITUSER" ] && GITUSER=$USER
+        sed -i -- "s/%user/$GITUSER/g" "$ORIG_MSG_FILE"
+
+        TYPE=`git branch | grep '^\*' | cut -b3- | cut -d '/' -f 1`
+        TICKETNO=`git branch | grep '^\*' | cut -b3- | cut -d '/' -f 2`
+
+        if [[ "$TYPE" != "$TICKETNO" ]];
+        then
+            if [[ ${TICKETNO:0:1} == "#" ]];
+            then
+                TICKETNO=`echo $TICKETNO | cut -d '-' -f 1`
+            else
+                TICKETNO='#xxx'
+            fi
+
+            case $TYPE in
+                h) TYPE=hotfix;;
+                *) TYPE=future;;
+            esac
+
+            sed -i -- "s/%type/$TYPE/g" "$ORIG_MSG_FILE"
+            sed -i -- "s/%issue/$TICKETNO/g" "$ORIG_MSG_FILE"
+        fi
+    ;;
+
+    *) ;;
+esac

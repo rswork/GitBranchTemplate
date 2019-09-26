@@ -1,0 +1,16 @@
+[%type: %user/%proj%issue]: 
+
+#
+# GIT Commit Template: [[hotfix|feature]: [Fixed|Closed] %user/%proj#xxx]: comment
+#
+# %type:           feature or hotfix
+#   hotfix:        fix a bug
+#   feature:       add a feature
+# Fixed:           Fixed means this hotfix is done
+# Closed:          Closed means this feature is done, if add this mark, issue will automatically close
+# %user/%proj#xxx: The repo %proj xxx issue
+#
+# !!WARNING!!
+# If you commit in the wrong branch, delete all uncommented lines
+# !!WARNING!!
+#
