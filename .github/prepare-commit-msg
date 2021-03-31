@@ -11,13 +11,11 @@ case "$2,$3" in
         sed -i -- "s/%user/$GITUSER/g" "$ORIG_MSG_FILE"
 
         TYPE=`git branch | grep '^\*' | cut -b3- | cut -d '/' -f 1`
-        TICKETNO=`git branch | grep '^\*' | cut -b3- | cut -d '/' -f 2`
+        TICKETNO="#`git branch | grep '^\*' | cut -b3- | cut -d '/' -f 2 | cut -d '#' -f 2 | cut -d '-' -f 1`"
 
-        if [[ "$TYPE" != "$TICKETNO" ]];
+        if [[ "$TYPE" != "" ]] && [[ "$TYPE" != "$TICKETNO" ]];
         then
-            TICKETNO="#`echo $TICKETNO | cut -d '#' -f 2 | cut -d '-' -f 1`"
-
-            if [[ "${TICKETNO}" == "" ]];
+            if [[ "${TICKETNO}" == "#" ]];
             then
                 TICKETNO='#xxx'
             fi
