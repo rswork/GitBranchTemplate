@@ -15,10 +15,10 @@ case "$2,$3" in
 
         if [[ "$TYPE" != "$TICKETNO" ]];
         then
-            if [[ ${TICKETNO:0:1} == "#" ]];
+            TICKETNO="#`echo $TICKETNO | cut -d '#' -f 2 | cut -d '-' -f 1`"
+
+            if [[ "${TICKETNO}" == "" ]];
             then
-                TICKETNO=`echo $TICKETNO | cut -d '-' -f 1`
-            else
                 TICKETNO='#xxx'
             fi
 
